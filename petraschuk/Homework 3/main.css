@@ -1,0 +1,29 @@
+body {
+	font-family: serif;
+	font-size: 18px;
+}
+
+.loop-result {
+	width: 190px;
+	margin: auto;
+}
+
+.result {
+	margin: auto;
+	width: 200px;
+	text-align: center;
+	padding: 10px;
+	margin-top: 20px;
+}
+
+.win-result {
+	border: 1px solid green;
+	color: green;
+
+}
+
+.lose-result {
+
+	border: 1px solid red;
+	color: red;
+}
