@@ -59,7 +59,7 @@ var data = [{
 	id : 10,
 	description : "uded through alternative means, such as additional",
 	date : 1322159200637
-}]
+}];
 
 
 // это тестовый объект чтоб показать как вставлять в HTML
