@@ -144,3 +144,5 @@ var init = function() {
 
 init();
 
+// Везде где for переделать на forEach
+
