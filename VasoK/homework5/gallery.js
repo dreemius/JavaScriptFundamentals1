@@ -61,35 +61,62 @@ var data = [{
 	date : 1322159200637
 }]
 
+//			INSTUCTIONS
+// всі:			START_ELEMENT=0;  ADDITION_SIZE=1;
+// непарні: 	START_ELEMENT=0;  ADDITION_SIZE=2;
+// парні: 		START_ELEMENT=1;  ADDITION_SIZE=2;
 
-// это тестовый объект чтоб показать как вставлять в HTML
-// вам надо пользоваться верхним 
-var item = {
-	url: "http://desktopwallpapers.org.ua/mini/201507/40065.jpg",
-	name: "картинка 1",
-	id : 1,
-	description : "Using color to add meaning only",
-	date : 1422153200637
-}
 
+var COUNT_ELEMENTS=6;
+var START_ELEMENT=1;
+var ADDITION_SIZE=2;
 
 var resultContainer = $('#result');
 var resultHTML = "";
-var itemTemplate = '<div class="col-sm-3 col-xs-6">\
+var newDate=new Date();
+
+function descriptionSlice(description){
+  return description.slice(0,15);
+}
+function nameToLowerCase(name){
+  return name.replace(name.substr(1),(name.substr(1)).toLowerCase());
+}
+function addZero(i) {
+    if (i < 10) {
+        i = "0" + i;
+    } return i;
+}
+function changeDateFormat(date){	
+	newDate.setTime(date);
+	
+	var new_date = addZero(newDate.getDate());
+	var new_month = addZero(newDate.getMonth()+1);
+	var new_year = newDate.getFullYear();
+	var new_hours = addZero(newDate.getHours());
+	var new_minutes = addZero(newDate.getMinutes());
+	
+	testDate=(new_year + "/" + new_month + "/" + new_date + " " + new_hours+":"+new_minutes);	
+}
+
+for (var i = START_ELEMENT; i < COUNT_ELEMENTS; i+=ADDITION_SIZE) {
+	var itemTemplate = '<div class="col-sm-3 col-xs-6">\
 				<img src="$url" alt="$name" class="img-thumbnail">\
 				<div class="info-wrapper">\
 					<div class="text-muted">$number: $name</div>\
 					<div class="text-muted">$description</div>\
-					<div class="text-muted">$date</div>\
+					<div class="text-muted" id="date">$date</div>\
 				</div>\
-			</div>';
+			</div>';	
+	changeDateFormat(data[i].date);
+	var newStr= descriptionSlice(data[i].description);
+	var newName = nameToLowerCase(data[i].name);
+	resultHTML += itemTemplate
+		.replace("$number", data[i].id)
+		.replace(/\$name/gi, newName)
+		.replace("$url", data[i].url)
+		.replace("$description", newStr)
+		.replace("$date", testDate);		
+}
 
-resultHTML += itemTemplate
-	.replace("$number", item.id)
-	.replace(/\$name/gi, item.name)
-	.replace("$url", item.url)
-	.replace("$description", item.description)
-	.replace("$date", item.date);
-			
-resultContainer.html(resultHTML);		
-			
+resultContainer.html(resultHTML);	
+
