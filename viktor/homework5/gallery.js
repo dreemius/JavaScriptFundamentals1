@@ -63,8 +63,8 @@ var data = [{
 
 
 
-var maxObj=10, 
-	sortObj=2; // 0 - все, 1 - не чётные, 2 - чётние!
+var maxObj=10,
+	sortObj=0; // 0 - все, 1 - не чётные, 2 - чётние!
 
 var filterEvenOdd = function(arg){
  
@@ -88,19 +88,19 @@ var filterEvenOdd = function(arg){
 };
 var filterCount = function (id) {
 	return id <=maxObj;
-}
+};
 var filterByConfig = function () {
 	var filtredData = [];
-	
-	for (var i=0; i<data.length; i++){
-		var id = data[i].id;
-		
-		if(filterEvenOdd(id) && filterCount(id) ){
-			filtredData.push(data[i]);
-		}
-	};
+    for (var key in data){
+        var id = data[key].id;
+
+        if(filterEvenOdd(id) && filterCount(id) ){
+            filtredData.push(data[key]);
+        }
+    }
+
 	return filtredData;
-} 
+};
 
 
 var newName = function(oldName){
@@ -112,7 +112,7 @@ var newDescr = function(descr){
     return descr.slice(0,14);
 };
 var newDate = function(date){
-    var tmpDate = new Date(date)
+    var tmpDate = new Date(date);
     return tmpDate.getFullYear() + "/" +
            tmpDate.getMonth() + "/" +
            tmpDate.getDate() + " " +
@@ -123,24 +123,25 @@ var newDate = function(date){
 
 var output = function(filtredData){
    var tmpResult;
-    for (var i=0; i<filtredData.length; i++) {
+    for (var key in filtredData){
         tmpResult =  '<div class="col-sm-3 col-xs-6">\
-				<img src="'+ filtredData[i].url + '" alt="'+ newName(filtredData[i].name) +'class="img-thumbnail">\
+				<img src="'+ filtredData[key].url + '" alt="'+ newName(filtredData[key].name) + '" class="img-thumbnail">\
 				<div class="info-wrapper">\
-					<div class="text-muted">'+ filtredData[i].id + ' '+ newName(filtredData[i].name) + '</div>\
-					<div class="text-muted">'+ newDescr(filtredData[i].description) + '</div>\
-					<div class="text-muted">'+ newDate(filtredData[i].date) + '</div>\
+					<div class="text-muted">'+ filtredData[key].id + ' '+ newName(filtredData[key].name) + '</div>\
+					<div class="text-muted">'+ newDescr(filtredData[key].description) + '</div>\
+					<div class="text-muted">'+ newDate(filtredData[key].date) + '</div>\
 				</div>\
 			</div>';
         document.getElementById("result").innerHTML += tmpResult;
     }
+
 } ;
 
 
 var init = function() {
 	var filtered = filterByConfig();
 	output(filtered);
-}
+};
 
 init();
 
