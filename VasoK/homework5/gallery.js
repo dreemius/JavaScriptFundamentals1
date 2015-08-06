@@ -67,13 +67,12 @@ var data = [{
 // парні: 		START_ELEMENT=1;  ADDITION_SIZE=2;
 
 
-var COUNT_ELEMENTS=6;
+var COUNT_ELEMENTS=10;
 var START_ELEMENT=1;
 var ADDITION_SIZE=2;
 
 var resultContainer = $('#result');
 var resultHTML = "";
-var newDate=new Date();
 
 function descriptionSlice(description){
   return description.slice(0,15);
@@ -82,12 +81,14 @@ function nameToLowerCase(name){
   return name.replace(name.substr(1),(name.substr(1)).toLowerCase());
 }
 function addZero(i) {
-    if (i < 10) {
+	return (i < 10) ? ("0" + i) : i;
+/*	if (i < 10) {
         i = "0" + i;
     } return i;
+	*/
 }
 function changeDateFormat(date){	
-	newDate.setTime(date);
+	var newDate =new Date(date);
 	
 	var new_date = addZero(newDate.getDate());
 	var new_month = addZero(newDate.getMonth()+1);
@@ -95,11 +96,11 @@ function changeDateFormat(date){
 	var new_hours = addZero(newDate.getHours());
 	var new_minutes = addZero(newDate.getMinutes());
 	
-	testDate=(new_year + "/" + new_month + "/" + new_date + " " + new_hours+":"+new_minutes);	
+	return (new_year + "/" + new_month + "/" + new_date + " " + new_hours+":"+new_minutes);	
 }
 
 for (var i = START_ELEMENT; i < COUNT_ELEMENTS; i+=ADDITION_SIZE) {
-	var itemTemplate = '<div class="col-sm-3 col-xs-6">\
+	var itemTemplate = '<div class="col-sm-3 col-xs-12">\
 				<img src="$url" alt="$name" class="img-thumbnail">\
 				<div class="info-wrapper">\
 					<div class="text-muted">$number: $name</div>\
@@ -107,15 +108,17 @@ for (var i = START_ELEMENT; i < COUNT_ELEMENTS; i+=ADDITION_SIZE) {
 					<div class="text-muted" id="date">$date</div>\
 				</div>\
 			</div>';	
-	changeDateFormat(data[i].date);
+	
+	var newDate = changeDateFormat(data[i].date);
 	var newStr= descriptionSlice(data[i].description);
 	var newName = nameToLowerCase(data[i].name);
+	
 	resultHTML += itemTemplate
 		.replace("$number", data[i].id)
 		.replace(/\$name/gi, newName)
 		.replace("$url", data[i].url)
 		.replace("$description", newStr)
-		.replace("$date", testDate);		
+		.replace("$date", newDate);		
 }
 
 resultContainer.html(resultHTML);	

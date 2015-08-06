@@ -63,10 +63,17 @@ var data = [{
 
 
 
-var maxObj=10, sortObj=0; // 0 - все, 1 - не чётные, 2 - чётние!
+var maxObj=10,
+	sortObj=0; // 0 - все, 1 - не чётные, 2 - чётние!
 
-var filterObj = function(arg){
-       if (sortObj!==1 && sortObj!==2 ){
+var filterEvenOdd = function(arg){
+ 
+	return ((sortObj!==1 && sortObj!==2 ) || 
+			(sortObj==1 && arg%2!==0) || 
+			(sortObj==2 && arg%2==0)) 
+			|| false;
+/* 
+		if (sortObj!==1 && sortObj!==2 ){
            return true;
        } else
        if(sortObj==1 && arg%2!==0){
@@ -77,27 +84,35 @@ var filterObj = function(arg){
        } else {
            return false
        }
+	   */
 };
-var filtredData = [];
+var filterCount = function (id) {
+	return id <=maxObj;
+};
+var filterByConfig = function () {
+	var filtredData = [];
+    for (var key in data){
+        var id = data[key].id;
 
-for (var i=0; i<data.length; i++){
-    if(filterObj(data[i].id) && data[i].id <=maxObj ){
-        filtredData.push(data[i])
+        if(filterEvenOdd(id) && filterCount(id) ){
+            filtredData.push(data[key]);
+        }
     }
+
+	return filtredData;
 };
+
 
 var newName = function(oldName){
     oldName = oldName.toLowerCase();
     oldName = oldName[0].toUpperCase()+oldName.slice(1);
-    return oldName
+    return oldName;
 };
-
 var newDescr = function(descr){
     return descr.slice(0,14);
 };
-
 var newDate = function(date){
-    var tmpDate = new Date(date)
+    var tmpDate = new Date(date);
     return tmpDate.getFullYear() + "/" +
            tmpDate.getMonth() + "/" +
            tmpDate.getDate() + " " +
@@ -105,20 +120,30 @@ var newDate = function(date){
            tmpDate.getMinutes();
 };
 
-var output = function(obj){
-   var mainResult, tmpResult
-    for (var i=0; i<filtredData.length; i++){
+
+var output = function(filtredData){
+   var tmpResult;
+    for (var key in filtredData){
         tmpResult =  '<div class="col-sm-3 col-xs-6">\
-				<img src="'+ filtredData[i].url + '" alt="'+ newName(filtredData[i].name) +'class="img-thumbnail">\
+				<img src="'+ filtredData[key].url + '" alt="'+ newName(filtredData[key].name) + '" class="img-thumbnail">\
 				<div class="info-wrapper">\
-					<div class="text-muted">'+ filtredData[i].id + ' '+ newName(filtredData[i].name) + '</div>\
-					<div class="text-muted">'+ newDescr(filtredData[i].description) + '</div>\
-					<div class="text-muted">'+ newDate(filtredData[i].date) + '</div>\
+					<div class="text-muted">'+ filtredData[key].id + ' '+ newName(filtredData[key].name) + '</div>\
+					<div class="text-muted">'+ newDescr(filtredData[key].description) + '</div>\
+					<div class="text-muted">'+ newDate(filtredData[key].date) + '</div>\
 				</div>\
 			</div>';
         document.getElementById("result").innerHTML += tmpResult;
     }
+
 } ;
 
-output(filtredData);
+
+var init = function() {
+	var filtered = filterByConfig();
+	output(filtered);
+};
+
+init();
+
+// Везде где for переделать на forEach
 
