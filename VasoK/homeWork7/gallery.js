@@ -139,3 +139,6 @@ function clearText() {
     input.value = "";
     copyText();
 }
+
+// доделать удаление
+// переделать создание элементов через createElement
