@@ -68,13 +68,13 @@ var deleteButton = "";
 var count = 0;
 var resultContainer = $('#test');
 var resultHTML = "";
-var itemTemplate = '<div id="$id" class="col-sm-3 col-xs-6">\
+var itemTemplate = '<div class="col-sm-3 col-xs-6">\
 	<img src="$url" alt="$testImage" class="img-thumbnail">\
 			<div class="info-wrapper">\
 			<div class="text-muted">$number: $name</div>\
 			<div class="text-muted">$description</div>\
 			<div class="text-muted">$date</div>\
-			<div class="text-muted"><a href="#">Delete</a></div>\
+			<div class="text-muted"><a href="#" id="$id">Delete</a></div>\
 			<br>\
 		</div>\
 	</div>';
@@ -107,13 +107,19 @@ function addNewElement() {
         count++;
         numberOfElements.innerHTML = count;
         resultContainer.html(resultHTML);
-        deleteButton = document.querySelector('#id0');
+        //deleteButton = document.querySelector('#id0');
     }
+	
+	resultContainer[0].addEventListener("click", deleteTheElement);
+	
     //deleteButton = document.querySelector('#id0');
-    deleteButton.addEventListener("click", deleteTheElement);
+    //deleteButton.addEventListener("click", deleteTheElement);
 }
 
-function deleteTheElement() {
-    console.log(deleteButton);
-
+function deleteTheElement(event) {
+    console.log(event.target);
 }
+
+
+// доделать удаление
+// переделать создание элементов через createElement

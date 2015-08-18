@@ -1,21 +1,19 @@
 "use-strict"
 
-var data = "";
 var input = document.querySelector('#exampleInputName2');
-var textArea = document.querySelector('.row textarea');
+var textArea = document.querySelector('textarea');
 var deleteButton = document.querySelector('.col-xs-6 button');
 
 input.addEventListener("keyup", displayTheData);
-
 deleteButton.addEventListener("click", deleteTheData);
 
 function displayTheData() {
-    data = input.value;
-    textArea.value = data;
+    textArea.value = input.value;
 }
 
 function deleteTheData() {
-    data = data.slice(0, data.length - 1);
+	var text = input.value;
+    var data = text.slice(0, text.length - 1);
     input.value = data;
     textArea.value = data;
 }
