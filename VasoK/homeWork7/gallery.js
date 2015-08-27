@@ -60,16 +60,15 @@ var data = [{
 	date : 1322159200637
 }]
 
-var resultContainer = $('#result');
-var resultHTML = "";
-var j=0;
-var addNewPicture = document.querySelector('#addNewPicture');
-var countPictures = $('#count');
-
-addNewPicture.addEventListener("click", addPicture);
-
+var resultContainer = document.querySelector('#result'),
+addNewPicture = document.querySelector('#addNewPicture'),
+countPictures = document.querySelector('#count');
+var dataLength = (data.length-1),
+	currentCount = 0,
+	count = 0;
+	
 function descriptionSlice(description){
-  return description.slice(0,15);
+  return description.slice(0,14);
 }
 function nameToLowerCase(name){
   return name.replace(name.substr(1),(name.substr(1)).toLowerCase());
@@ -88,42 +87,89 @@ function changeDateFormat(date){
 	
 	return (new_year + "/" + new_month + "/" + new_date + " " + new_hours+":"+new_minutes);	
 }
+	var createCustomElement = function (config) {		
+	var el 			= document.createElement(config.type);
+	el.className 	= config.class;
+	if (config.src) {el.src = config.src};
+	if (config.insertText) {el.innerHTML = config.insertText};
+	config.parentElement.appendChild(el);
+	return el;
+}	
 
-	var itemTemplate = '<div class="col-sm-3 col-xs-12">\
-				<img src="$url" alt="$name" class="img-thumbnail">\
-				<div class="info-wrapper">\
-					<div class="text-muted">$number: $name</div>\
-					<div class="text-muted">$description</div>\
-					<div class="text-muted" id="date">$date</div>\
-					<div class="text-muted" ><a href="#" id="$id">Удалить</a></div>\
-				</div>\
-			</div>';	
+var updateCounts = function () {
+	currentCount == dataLength ? currentCount=0 : currentCount++;
+	count++;
+	countPictures.innerHTML=count;	
+}
 	
-function addPicture() {
-	var newDate = changeDateFormat(data[j].date);
-	var newStr= descriptionSlice(data[j].description);
-	var newName = nameToLowerCase(data[j].name);
-	
-	resultHTML += itemTemplate
-		.replace("$number", data[j].id)
-		.replace(/\$name/gi, newName)
-		.replace("$url", data[j].url)
-		.replace("$description", newStr)
-		.replace("$date", newDate)		
-		.replace("$id", "deleteBut-"+j);			
+var processNewElement = function(){
+	var mainDiv = document.querySelector('#result');
+			
+		var secondDiv = createCustomElement ({
+			type 			: 'div',
+			class			: 'col-sm-3 col-xs-6',
+			parentElement 	: mainDiv
+		})
+
+		var imgURL = createCustomElement ({
+			type 			: 'img',
+			class			: 'img-thumbnail',
+			parentElement 	: secondDiv,
+			src				: data[currentCount].url
+		})
+				
+		var thirdDiv = createCustomElement ({
+			type 			: 'div',
+			class			: 'info-wrapper',
+			parentElement 	: secondDiv
+		})
 		
-		countPictures.text(j+1);
+	var lastDiv1 = createCustomElement ({
+			type 			: 'div',
+			class			: 'text-muted',
+			parentElement 	: thirdDiv,
+			insertText		: data[currentCount].id + ' ' + nameToLowerCase(data[currentCount].name)
+		})
+		
+	var lastDiv2 = createCustomElement ({
+			type 			: 'div',
+			class			: 'text-muted',
+			parentElement 	: thirdDiv,
+			insertText		: descriptionSlice(data[currentCount].description)
+		})
+		
+	var lastDiv3 = createCustomElement ({
+			type 			: 'div',
+			class			: 'text-muted',
+			parentElement 	: thirdDiv,
+			insertText		: changeDateFormat(data[currentCount].date)
+		})
+		
+	var delDiv = document.createElement('div'),
+		delLink = document.createElement('a');
+		delDiv.className = "text-muted";
+		delLink.href = "#";
+		delLink.innerHTML = "Удалить";
+		thirdDiv.appendChild(delDiv);
+		delDiv.appendChild(delLink);
+		delDiv.addEventListener("click", deletePicture);
+			
+		updateCounts();	
+}	
 	
-	j++;
-	
-	resultContainer.html(resultHTML);	
-}
-function deletePicture() {
-	var oldCount=countPictures.value;
-	countPictures.value=oldCount-1;
+var deletePicture = function (event) {
+	console.log(event.target);
+	console.log(event.currentTarget);
+	document.getElementById('result').removeChild(event.target.parentNode.parentNode.parentNode);
+	count--;
+	countPictures.innerHTML=count;
 }
 
+addNewPicture.addEventListener("click", processNewElement);	
 
+
+
+//Завдання №2
 var input = document.querySelector('#exampleInputName2');
 var textArea = document.querySelector('.row textarea');
 var clearButton = document.querySelector('.col-xs-6 button');
