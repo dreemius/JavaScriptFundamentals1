@@ -185,3 +185,58 @@ function deleteTheData() {
     input.value ="";
     textArea.value = "";
 }
+
+
+
+
+
+
+/*
+var  firstData = createCustomElement({
+			type 			: 'div',
+			class			: 'col-sm-3 col-xs-6',
+			parentElement 	: myDiv
+		});
+     
+		
+var secondDiv = createCustomElement ({
+			type 			: 'img',
+			class			: 'img-thumbnail',
+			parentElement 	: secondDiv,
+			src				: data[startData].url
+		})
+	
+
+	/*
+var thirdData = createCustomElement({
+			type 			: 'div',
+			class			: 'Inform-wrapper',
+			parentElement 	: firstData
+		});
+	
+
+var nameData = createCustomElement({
+			type 			: 'div',
+			class			: 'text-div',
+			parentElement 	: thirdData,
+		    innerHTML       : data[ startData].id  + ' ' + newName
+			
+		});
+
+var descriptionData = createCustomElement({
+			type 			: 'div',
+			class			: 'text-div',
+			parentElement 	: thirdData,
+		    innerHTML       : newStr
+			
+		});
+	
+   
+
+var dateData = createCustomElement({
+			type 			: 'div',
+			class			: 'text-div',
+			parentElement 	: thirdData,
+		    innerHTML       : newDate
+			
+		});	*/

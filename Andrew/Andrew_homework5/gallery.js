@@ -1,16 +1,7 @@
-var NUMBERS_TO_DISPLAY = 2; // if 0 - all, if 1 - odd, if 2 - even
-var resultContainer = $('#result');
-var resultHTML = "";
-var itemTemplate = '<div class="col-sm-3 col-xs-6">\
-				<img src="$url" alt="$name" class="img-thumbnail">\
-				<div class="info-wrapper">\
-					<div class="text-muted">$number: $name</div>\
-					<div class="text-muted">$description</div>\
-					<div class="text-muted">$date</div>\
-				</div>\
-			</div>';
+var NUMBER_TO_DISPLAY = 10;
 
-// Это реальный объект на основе которого вам надо дудет строить галлерею
+var EVEN_ODD_ALL = 0; // 0 - all, 1 - odd, 2 - even
+
 var data = [{
 	url: "http://desktopwallpapers.org.ua/mini/201507/40069.jpg",
 	name: "МАШИНКА",
@@ -73,33 +64,102 @@ var data = [{
 	date : 1322159200637
 }];
 
+var dataToDisplay = chooseDataToDisplay();
 
-function extractDataToDisplay() {
+var resultContainer = $('#result');
+
+var resultHTML = "";
+
+var itemTemplate = '<div class="col-sm-3 col-xs-6">\
+						<img src="$url" alt="$name" class="img-thumbnail">\
+						<div class="info-wrapper">\
+							<div class="text-muted">$number: $name</div>\
+							<div class="text-muted">$description</div>\
+							<div class="text-muted">$date</div>\
+						</div>\
+					</div>';
+
+var formattedDate = 0;
+
+var count = 0;
+
+
+function chooseDataToDisplay() {
+	
 	return data.filter(function(item) {
-		if(NUMBERS_TO_DISPLAY == 1) {
+		var formattedDate = new Date(item.date);
+		item.date = formattedDate.getFullYear() + "/" + 
+		(formattedDate.getMonth() + 1) + "/" + 
+		formattedDate.getDate();
+		
+		if (EVEN_ODD_ALL == 1) {
 			return item.id % 2 != 0;
-		} else if(NUMBERS_TO_DISPLAY == 2) {
+		} else if (EVEN_ODD_ALL == 2) {
 			return item.id % 2 == 0;
 		} else return data;
 	});
-}
+};
 
 
-extractDataToDisplay().forEach(function(item, i, arg) {
+function buildDiv() {
+	
+	var el = document.createElement('div');
+	el.id = "result2";
+	el.class = "row";
+	var container = document.getElementById('container');
+	container.appendChild(el);
+	
+	var picture = document.createElement('div');
+	picture.id = "theImage";
+	picture.class = "col-sm-3 col-xs-6";
+	var result2 = document.getElementById('result2');
+	result2.appendChild(picture);
+	
+	var img = document.createElement('img');
+	img.src = data[0].url;
+	img.alt = data[0].name;
+	img.class = "img-thumbnail";
+	var theImage = document.getElementById('theImage');
+	theImage.appendChild(img);
 
-	var capitalizedFirstLetter = item.name.charAt(0) + 
-								 item.name.slice(1).toLowerCase();
-	var shortDescription = item.description.slice(0, 15);
-	var date = new Date(item.date);
-	var formattedDate = date.getFullYear() + "/" + (+date.getMonth() + 1) 
-						+ "/" + date.getDate();
-	resultHTML += itemTemplate
+	var inf = document.createElement('div');
+	inf.id = "inf";
+	inf.class = "info-wrapper";
+	theImage.appendChild(inf);
+
+	var numberAndName = document.createElement('div');
+	numberAndName.class = "text-muted";
+	numberAndName.innerHTML = data[0].id + ": " + data[0].name;
+	var info = document.getElementById('inf');
+	info.appendChild(numberAndName);
+
+	var description = document.createElement('div');
+	description.class = "text-muted";
+	description.innerHTML = data[0].description;
+	info.appendChild(description);
+
+	var date = document.createElement('div');
+	date.class = "text-muted";
+	date.innerHTML = data[0].date;
+	info.appendChild(date);
+};
+
+
+dataToDisplay.forEach(function(item) {
+	
+	count++;
+	if(count <= NUMBER_TO_DISPLAY) {
+		resultHTML += itemTemplate
 		.replace("$number", item.id)
-		.replace(/\$name/gi, capitalizedFirstLetter)
+		.replace(/\$name/gi, item.name)
 		.replace("$url", item.url)
-		.replace("$description", shortDescription)
-		.replace("$date", formattedDate);
+		.replace("$description", item.description)
+		.replace("$date", item.date);
+	};
 });
 
 
 resultContainer.html(resultHTML);
+
+
+buildDiv();
