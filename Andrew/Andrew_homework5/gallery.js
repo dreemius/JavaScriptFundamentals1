@@ -1,4 +1,4 @@
-var NUMBERS_TO_DISPLAY = 0; // if 0 - all, if 1 - odd, if 2 - even
+var NUMBERS_TO_DISPLAY = 2; // if 0 - all, if 1 - odd, if 2 - even
 var resultContainer = $('#result');
 var resultHTML = "";
 var itemTemplate = '<div class="col-sm-3 col-xs-6">\
