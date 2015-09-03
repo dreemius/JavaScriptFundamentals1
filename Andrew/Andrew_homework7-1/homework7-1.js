@@ -70,7 +70,6 @@ var count = 0;
 
 
 function addPicture() {
-
 	
 		count++;
 		data.forEach(function(item, i, arr) {
@@ -130,15 +129,16 @@ function addPicture() {
 
 function deletePicture(number) {
 	console.log("we try to delete");
-	data.map(function(item, i, arr) {
+	return data.map(function(item, i, arr) {
 		if(number == item.id) {
 			data.splice(i, 1);
 			count--;
-			return data;
-		} else return data;
-		
+			return item;
+		} else return item;
 	});
 }
 
-button.addEventListener("click", addPicture);
 
+console.log(deletePicture(5));
+
+button.addEventListener("click", addPicture);
