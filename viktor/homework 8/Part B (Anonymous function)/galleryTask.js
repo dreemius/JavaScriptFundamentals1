@@ -3,14 +3,13 @@
     var maxCount = (data.length-1),
         currentCount = 0,
         count = 0;
-    console.log(data.length-1);
 
     var createCustomElement = function (config) {
-        var el 			        = document.createElement(config.type);
-        el.className 	        = config.class;
-        if (config.src) {el.src = config.src}
+        var el 			                    = document.createElement(config.type);
+    el.className 	                        = config.class;
+        if (config.src) {el.src             = config.src}
         if (config.innerHTML) {el.innerHTML = config.innerHTML}
-        if (config.href) {el.hrefL = config.href}
+        if (config.href) {el.hrefL          = config.href}
         config.parentElement.appendChild(el);
         return el;
     };
@@ -97,16 +96,18 @@
         }
     };
 
-    window.galleryBuilder = {
-        add       : processNewElement,
-        delte     : delteElement
-    }
+    init = function(){
+        window.galleryBuilder = {
+            add    : processNewElement,
+            delete : delteElement
+        };
+        document.querySelector('#addObj').addEventListener("click", galleryBuilder.add);
+        document.querySelector('#test').addEventListener("click", galleryBuilder.delete);
+    };
 
 }());
 
-document.querySelector('#addObj').onclick = galleryBuilder.add;
-
-document.querySelector('#test').onclick = galleryBuilder.delte;
+init();
 
 	//document.querySelector('#test').removeChild(event.target.closest('.col-sm-3'));
     //updateCounts();

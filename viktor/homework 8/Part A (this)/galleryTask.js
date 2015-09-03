@@ -5,10 +5,16 @@ var builder = {
     currentCount    : 0,
     count           : 0,
     data            : [],
+    that            : [],
+
+
 
     init : function(data) {
-         this.data = data;
-         this.maxCount = (data.length-1);
+        this.data = data;
+        this.maxCount = (data.length-1);
+        this.that = this;  // ????
+        document.querySelector('#addObj').addEventListener("click", this.processNewElement);
+        document.querySelector('#test').addEventListener("click", this.delteElement);
     },
 
     createCustomElement : function (config) {
@@ -22,10 +28,10 @@ var builder = {
     },
 
     updateCounts : function(event) {
-        event.id == 'addObj' ? (builder.currentCount == builder.maxCount ?
-                     builder.currentCount = 0 : builder.currentCount++, builder.count++) :
-                    (builder.currentCount--, builder.count--);
-        document.querySelector('#count').innerHTML = builder.count;
+        event.id == 'addObj' ? (this.currentCount == this.maxCount ?
+            this.currentCount = 0 : this.currentCount++, this.count++) :
+                    (this.currentCount--, this.count--);
+        document.querySelector('#count').innerHTML = this.count;
     },
 
     newDate : function(date){
@@ -38,6 +44,7 @@ var builder = {
     },
 
     processNewElement : function(){
+        console.log(this);
         var mainDiv = document.querySelector("#test");
 
         var secondDiv = builder.createCustomElement ({
@@ -92,7 +99,7 @@ var builder = {
             class			: 'remove',
             innerHTML       : 'Удалить',
             parentElement 	: delDiv
-    });
+        });
 
         builder.updateCounts(this);
 },
@@ -100,16 +107,16 @@ var builder = {
     delteElement : function(event){
         if(event.target.className == 'remove'){
             document.querySelector('#test').removeChild(event.target.closest('.col-sm-3'));
-            builder.updateCounts(this)}
+            builder.updateCounts(event)
+
+        }
     }
 
 };
 
 builder.init(data);
 
-document.querySelector('#addObj').onclick = builder.processNewElement;
 
-document.querySelector('#test').onclick = builder.delteElement;
 
 	//document.querySelector('#test').removeChild(event.target.closest('.col-sm-3'));
     //updateCounts();
