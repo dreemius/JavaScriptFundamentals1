@@ -138,12 +138,14 @@ if ((SET_START>0) && (SET_START<=10) && (SET_STOP>0) && (SET_STOP<=10) && (SET_S
 		if ((tempCount>=SET_START) && (tempCount<=SET_STOP)) {
 			if  (SET_EVEN && (item.id%2==1)){
 				// This is for debugging : console.log("even " + setRow + " item" + item.id + " count " + tempCount);
-				addHtmlElement(item,setRow);
+				//addHtmlElement(item,setRow);
+				AddEl(item,setRow);
 				tempShow++;
 			};
 			if  (SET_ODD && (item.id%2==0)){	
 				// This is for debugging : console.log("odd " + setRow + " item" + item.id + " count " + tempCount);
-				addHtmlElement(item,setRow);
+				//addHtmlElement(item,setRow);
+				AddEl(item,setRow);
 				tempShow++;
 				
 			};
@@ -182,5 +184,36 @@ if ((SET_START>0) && (SET_START<=10) && (SET_STOP>0) && (SET_STOP<=10) && (SET_S
      container.appendChild(el1);
 	 container.appendChild(el2);
 	 container.appendChild(el3);
-						
 
+	// Function for adding element with DOM method only	
+	function AddEl(item,rowid){			
+             if (rowid.slice(0,1)=="#"){rowid = rowid.slice(1)};	
+			 var el1 = document.createElement('div');
+			 el1.className = "col-sm-3 col-xs-6";
+			 el1.id = "newContainerDiv"+item.id;
+			 var container = document.getElementById(rowid);
+			 container.appendChild(el1);
+			 var el2 = document.createElement('img');
+			 el2.className = "img-thumbnail";
+			 el2.setAttribute('src', item.url);
+			 el2.setAttribute('alt', item.name);
+			 var el3 = document.createElement('div');
+			 el3.className = "info-wrapper";
+			 el3.id = "newInfoDiv"+item.id;
+			 var container = document.getElementById("newContainerDiv"+item.id);
+			 container.appendChild(el2);
+			 container.appendChild(el3);
+			 el1 = document.createElement('div');
+			 el1.className ="text-muted";
+			 el1.innerHTML = item.id + " : " + transformString(item.name,15);
+			 el2 = document.createElement('div'); 
+			 el2.className ="text-muted";
+			 el2.innerHTML = transformString(item.description,38);
+			 el3 = document.createElement('div'); 
+			 el3.className ="text-muted";
+			 el3.innerHTML = transformDate(item.date);
+			 container = document.getElementById("newInfoDiv"+item.id);
+			 container.appendChild(el1);
+			 container.appendChild(el2);
+			 container.appendChild(el3);
+	};
