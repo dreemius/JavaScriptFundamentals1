@@ -12,9 +12,9 @@ var builder = {
     init : function(data) {
         this.data = data;
         this.maxCount = (data.length-1);
-        this.that = this;  // ????
-        document.querySelector('#addObj').addEventListener("click", this.processNewElement);
-        document.querySelector('#test').addEventListener("click", this.delteElement);
+        var that = this;  // ????
+        document.querySelector('#addObj').addEventListener("click", this.processNewElement.bind(this));
+        document.querySelector('#test').addEventListener("click", function(event){that.delteElement(event);	});
     },
 
     createCustomElement : function (config) {
@@ -101,7 +101,7 @@ var builder = {
             parentElement 	: delDiv
         });
 
-        builder.updateCounts(this);
+        builder.updateCounts(event);
 },
 
     delteElement : function(event){

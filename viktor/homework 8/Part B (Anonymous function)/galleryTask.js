@@ -94,16 +94,27 @@
              document.querySelector('#test').removeChild(event.target.closest('.col-sm-3'));
              updateCounts(this)
         }
-    };
+    
+	var attachListeners = function () {
+		document.querySelector('#addObj').addEventListener("click", processNewElement);
+        document.querySelector('#test').addEventListener("click", delteElement);
+	}
+	
+	var init = function() {
+		attachListeners();
+	}
 
-    init = function(){
-        window.galleryBuilder = {
-            add    : processNewElement,
-            delete : delteElement
-        };
-        document.querySelector('#addObj').addEventListener("click", galleryBuilder.add);
-        document.querySelector('#test').addEventListener("click", galleryBuilder.delete);
-    };
+    // init = function(){
+        // window.galleryBuilder = {
+            // add    : processNewElement,
+            // delete : delteElement
+        // };
+        // document.querySelector('#addObj').addEventListener("click", galleryBuilder.add);
+        // document.querySelector('#test').addEventListener("click", galleryBuilder.delete);
+    // };
+	
+	window.init = init;
+		
 
 }());
 
