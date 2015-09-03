@@ -110,7 +110,8 @@ function transformDate(indate){
 function addHtmlElement(item,rowid){
     var resultHTML = "";
 	var resultContainer = $(rowid);
-    	var itemTemplate = '<div class="col-sm-3 col-xs-6" id=$bid>\
+	
+	var itemTemplate = '<div class="col-sm-3 col-xs-6">\
 					<img src="$url" alt="$name" class="img-thumbnail">\
 					<div class="info-wrapper">\
 						<div class="text-muted">$number: $name</div>\
@@ -120,100 +121,34 @@ function addHtmlElement(item,rowid){
 				</div>';
 
 	resultHTML += itemTemplate
-	    .replace("$bid", 'bid'+item.id)
 		.replace("$number", item.id)
 		.replace(/\$name/gi, transformString(item.name,15))
 		.replace("$url", item.url)
 		.replace("$description", transformString(item.description,37))
 		.replace("$date", transformDate(item.date));
 				
-	resultContainer.append(resultHTML);
-	
+	resultContainer.append(resultHTML);		
 };
 // This is for debugging : console.log("Start working");			
-if ((SET_START>0) && (SET_START<=10) && (SET_STOP>0) && (SET_STOP<=10) && (SET_START<=SET_STOP)) { // Check for correct start stop parameter 	
+if ((SET_START>0) && (SET_START<=10) && (SET_STOP>0) && (SET_STOP<=10) && (SET_START<=SET_STOP)) { // Check for correct start stop parameter 
 	data.forEach(function(item, i, arr) {
-			setRow = "#result" + Math.ceil(tempShow/4);
-		
+		setRow = "#result" + Math.ceil(tempShow/4);
+	
 		if ((tempCount>=SET_START) && (tempCount<=SET_STOP)) {
 			if  (SET_EVEN && (item.id%2==1)){
-				// This is for debugging : console.log("even " + setRow + " item" + item.id + " count " + tempCount);
-				//addHtmlElement(item,setRow);
-				AddEl(item,setRow);
+				//This is for debugging : console.log("even " + setRow + " item" + item.id + " count " + tempCount);
+				addHtmlElement(item,setRow);
 				tempShow++;
 			};
 			if  (SET_ODD && (item.id%2==0)){	
-				// This is for debugging : console.log("odd " + setRow + " item" + item.id + " count " + tempCount);
-				//addHtmlElement(item,setRow);
-				AddEl(item,setRow);
+				//This is for debugging : console.log("odd " + setRow + " item" + item.id + " count " + tempCount);
+				addHtmlElement(item,setRow);
 				tempShow++;
 				
 			};
 			
 		}
-		
-		tempCount++;
+	
+	tempCount++;
 })};
 
-// DOM add element without JQuery
-	 var el1 = document.createElement('div');
-     el1.className = "col-sm-3 col-xs-6";
-	 el1.id = "newContainerDiv";
-	 var container = document.getElementById("result");
-     container.appendChild(el1);
-	 var el2 = document.createElement('img');
-     el2.className = "img-thumbnail";
-	 el2.setAttribute('src', data[0].url);
-     el2.setAttribute('alt', data[0].name);
-	 var el3 = document.createElement('div');
-     el3.className = "info-wrapper";
-	 el3.id = "newInfoDiv"
-     var container = document.getElementById("newContainerDiv");
-     container.appendChild(el2);
-	 container.appendChild(el3);
-     el1 = document.createElement('div');
-	 el1.className ="text-muted";
-	 el1.innerHTML = data[0].id + " : " + transformString(data[0].name,15);
-	 el2 = document.createElement('div'); 
-	 el2.className ="text-muted";
-	 el2.innerHTML = transformString(data[0].description,38);
-     el3 = document.createElement('div'); 
-	 el3.className ="text-muted";
-	 el3.innerHTML = transformDate(data[0].date);
-	 container = document.getElementById("newInfoDiv");
-     container.appendChild(el1);
-	 container.appendChild(el2);
-	 container.appendChild(el3);
-
-	// Function for adding element with DOM method only	
-	function AddEl(item,rowid){			
-             if (rowid.slice(0,1)=="#"){rowid = rowid.slice(1)};	
-			 var el1 = document.createElement('div');
-			 el1.className = "col-sm-3 col-xs-6";
-			 el1.id = "newContainerDiv"+item.id;
-			 var container = document.getElementById(rowid);
-			 container.appendChild(el1);
-			 var el2 = document.createElement('img');
-			 el2.className = "img-thumbnail";
-			 el2.setAttribute('src', item.url);
-			 el2.setAttribute('alt', item.name);
-			 var el3 = document.createElement('div');
-			 el3.className = "info-wrapper";
-			 el3.id = "newInfoDiv"+item.id;
-			 var container = document.getElementById("newContainerDiv"+item.id);
-			 container.appendChild(el2);
-			 container.appendChild(el3);
-			 el1 = document.createElement('div');
-			 el1.className ="text-muted";
-			 el1.innerHTML = item.id + " : " + transformString(item.name,15);
-			 el2 = document.createElement('div'); 
-			 el2.className ="text-muted";
-			 el2.innerHTML = transformString(item.description,38);
-			 el3 = document.createElement('div'); 
-			 el3.className ="text-muted";
-			 el3.innerHTML = transformDate(item.date);
-			 container = document.getElementById("newInfoDiv"+item.id);
-			 container.appendChild(el1);
-			 container.appendChild(el2);
-			 container.appendChild(el3);
-	};

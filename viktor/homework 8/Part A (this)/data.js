@@ -1,15 +1,3 @@
-var NUMBERS_TO_DISPLAY = 0; // if 0 - all, if 1 - odd, if 2 - even
-var resultContainer = $('#result');
-var resultHTML = "";
-var itemTemplate = '<div class="col-sm-3 col-xs-6">\
-				<img src="$url" alt="$name" class="img-thumbnail">\
-				<div class="info-wrapper">\
-					<div class="text-muted">$number: $name</div>\
-					<div class="text-muted">$description</div>\
-					<div class="text-muted">$date</div>\
-				</div>\
-			</div>';
-
 // Это реальный объект на основе которого вам надо дудет строить галлерею
 var data = [{
 	url: "http://desktopwallpapers.org.ua/mini/201507/40069.jpg",
@@ -72,34 +60,3 @@ var data = [{
 	description : "uded through alternative means, such as additional",
 	date : 1322159200637
 }];
-
-
-function extractDataToDisplay() {
-	return data.filter(function(item) {
-		if(NUMBERS_TO_DISPLAY == 1) {
-			return item.id % 2 != 0;
-		} else if(NUMBERS_TO_DISPLAY == 2) {
-			return item.id % 2 == 0;
-		} else return data;
-	});
-}
-
-
-extractDataToDisplay().forEach(function(item, i, arg) {
-
-	var capitalizedFirstLetter = item.name.charAt(0) + 
-								 item.name.slice(1).toLowerCase();
-	var shortDescription = item.description.slice(0, 15);
-	var date = new Date(item.date);
-	var formattedDate = date.getFullYear() + "/" + (+date.getMonth() + 1) 
-						+ "/" + date.getDate();
-	resultHTML += itemTemplate
-		.replace("$number", item.id)
-		.replace(/\$name/gi, capitalizedFirstLetter)
-		.replace("$url", item.url)
-		.replace("$description", shortDescription)
-		.replace("$date", formattedDate);
-});
-
-
-resultContainer.html(resultHTML);
