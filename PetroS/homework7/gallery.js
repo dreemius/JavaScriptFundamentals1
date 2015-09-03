@@ -110,8 +110,7 @@ function transformDate(indate){
 function addHtmlElement(item,rowid){
     var resultHTML = "";
 	var resultContainer = $(rowid);
-	
-	var itemTemplate = '<div class="col-sm-3 col-xs-6">\
+    	var itemTemplate = '<div class="col-sm-3 col-xs-6" id=$bid>\
 					<img src="$url" alt="$name" class="img-thumbnail">\
 					<div class="info-wrapper">\
 						<div class="text-muted">$number: $name</div>\
@@ -121,34 +120,95 @@ function addHtmlElement(item,rowid){
 				</div>';
 
 	resultHTML += itemTemplate
+	    .replace("$bid", 'bid'+item.id)
 		.replace("$number", item.id)
 		.replace(/\$name/gi, transformString(item.name,15))
 		.replace("$url", item.url)
-		.replace("$description", transformString(item.description,37))
+		.replace("$description", transformString(item.description,38))
 		.replace("$date", transformDate(item.date));
 				
-	resultContainer.append(resultHTML);		
-};
-// This is for debugging : console.log("Start working");			
-if ((SET_START>0) && (SET_START<=10) && (SET_STOP>0) && (SET_STOP<=10) && (SET_START<=SET_STOP)) { // Check for correct start stop parameter 
-	data.forEach(function(item, i, arr) {
-		setRow = "#result" + Math.ceil(tempShow/4);
+	resultContainer.append(resultHTML);
 	
+};
+
+// Set attribute for adding object from data array 
+data.forEach(function(item, i, arr) {
+	item.show = false;
+});
+
+
+//Add event handler
+function addEvent(id){
+	var element = document.getElementById(id);
+	element.addEventListener("click", delElement(id), false);
+};
+
+//Delete element function
+function delElement(id){
+	var element = document.getElementById(id);
+    element.parentNode.removeChild(element);
+	
+};
+
+
+
+var el = document.getElementById("btn");
+el.addEventListener("click", addObject, false);
+
+
+function addObject() {
+	var tempid="";
+	console.log("Test");
+	if ((SET_START>0) && (SET_START<=10) && (SET_STOP>0) && (SET_STOP<=10) && (SET_START<=SET_STOP)) {
+		setRow = "#result" + Math.ceil(tempShow/4);
+		if ((tempCount>=SET_START) && (tempCount<=SET_STOP)) {
+			if  (SET_EVEN && (data[(tempCount-1)].id%2==1)){
+				console.log("even " + setRow + " item" + data[(tempCount-1)].id + " count " + tempCount);
+				addHtmlElement(data[(tempCount-1)],setRow);
+				data[(tempCount-1)].show = true;
+				tempShow++;
+				tempid = "bid"+(tempCount-1);
+				console.log(tempid);
+			};
+			if  (SET_ODD && (data[(tempCount-1)].id%2==0)){	
+				console.log("odd " + setRow + " item" + data[(tempCount-1)].id + " count " + tempCount);
+				addHtmlElement(data[(tempCount-1)],setRow);
+				data[(tempCount-1)].show = true;
+				tempShow++;
+				
+			};
+			
+		};
+		
+		tempCount++;
+	};
+	if (tempCount == 11) {
+		$("#btn").removeClass("btn btn-primary").addClass("btn btn-default");
+				
+	};
+};
+
+
+// This is for debugging : console.log("Start working");			
+/*if ((SET_START>0) || (SET_START<10) || (SET_ST0P>0) || (SET_STOP<10) || (SET_START<=SET_STOP)) { // Check for correct start stop parameter 	
+	data.forEach(function(item, i, arr) {
+			setRow = "#result" + Math.ceil(tempShow/4);
+		
 		if ((tempCount>=SET_START) && (tempCount<=SET_STOP)) {
 			if  (SET_EVEN && (item.id%2==1)){
-				//This is for debugging : console.log("even " + setRow + " item" + item.id + " count " + tempCount);
+				console.log("even " + setRow + " item" + item.id + " count " + tempCount);
 				addHtmlElement(item,setRow);
 				tempShow++;
 			};
 			if  (SET_ODD && (item.id%2==0)){	
-				//This is for debugging : console.log("odd " + setRow + " item" + item.id + " count " + tempCount);
+				console.log("odd " + setRow + " item" + item.id + " count " + tempCount);
 				addHtmlElement(item,setRow);
 				tempShow++;
 				
 			};
 			
 		}
-	
-	tempCount++;
-})};
+		
+		tempCount++;
+})};*/
 
