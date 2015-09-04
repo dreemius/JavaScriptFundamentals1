@@ -1,7 +1,7 @@
 /*Task one*/
 (function (){
-    var data = [],
-        maxCount = (data.length-1),
+    var internalData = [],
+        maxCount = 0,
         currentCount = 0,
         count = 0;
 
@@ -43,7 +43,7 @@
             type 			: 'img',
             class			: 'img-thumbnail',
             parentElement 	: secondDiv,
-            src				: data[currentCount].url
+            src				: internalData[currentCount].url
         });
 
         var thirdDiv = createCustomElement ({
@@ -55,21 +55,21 @@
         var lastDiv1 = createCustomElement ({
             type 			: 'div',
             class			: 'text-muted',
-            innerHTML       : data[currentCount].id + ' ' + data[currentCount].name,
+            innerHTML       : internalData[currentCount].id + ' ' + internalData[currentCount].name,
             parentElement 	: thirdDiv
         });
 
         var lastDiv2 = createCustomElement ({
             type 			: 'div',
             class			: 'text-muted',
-            innerHTML       : data[currentCount].description,
+            innerHTML       : internalData[currentCount].description,
             parentElement 	: thirdDiv
         });
 
         var lastDiv3 = createCustomElement ({
             type 			: 'div',
             class			: 'text-muted',
-            innerHTML       : newDate(data[currentCount].date),
+            innerHTML       : newDate(internalData[currentCount].date),
             parentElement 	: thirdDiv
         });
 
@@ -103,10 +103,9 @@
 	};
 	
 	var init = function(){
-        data = this.data;
+        internalData = data;
+        maxCount = (internalData.length-1);
 		attachListeners();
-        console.log(this);
-
 	};
 
     // init = function(){
