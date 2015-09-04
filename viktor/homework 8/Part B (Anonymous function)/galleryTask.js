@@ -1,6 +1,7 @@
 /*Task one*/
 (function (){
-    var maxCount = (data.length-1),
+    var data = [],
+        maxCount = (data.length-1),
         currentCount = 0,
         count = 0;
 
@@ -89,20 +90,24 @@
         updateCounts(this);
     };
 
-    var delteElement = function(event){
-        if(event.target.className == 'remove'){
-             document.querySelector('#test').removeChild(event.target.closest('.col-sm-3'));
-             updateCounts(this)
+    var delteElement = function(event) {
+        if (event.target.className == 'remove') {
+            document.querySelector('#test').removeChild(event.target.closest('.col-sm-3'));
+            updateCounts(this)
         }
-    
-	var attachListeners = function () {
+    };
+
+	var attachListeners = function() {
 		document.querySelector('#addObj').addEventListener("click", processNewElement);
         document.querySelector('#test').addEventListener("click", delteElement);
-	}
+	};
 	
-	var init = function() {
+	var init = function(){
+        data = this.data;
 		attachListeners();
-	}
+        console.log(this);
+
+	};
 
     // init = function(){
         // window.galleryBuilder = {
@@ -118,7 +123,7 @@
 
 }());
 
-init();
+init(data);
 
 	//document.querySelector('#test').removeChild(event.target.closest('.col-sm-3'));
     //updateCounts();

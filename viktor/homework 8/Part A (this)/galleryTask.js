@@ -5,7 +5,6 @@ var builder = {
     currentCount    : 0,
     count           : 0,
     data            : [],
-    that            : [],
 
 
 
@@ -13,8 +12,8 @@ var builder = {
         this.data = data;
         this.maxCount = (data.length-1);
         var that = this;  // ????
-        document.querySelector('#addObj').addEventListener("click", this.processNewElement.bind(this));
-        document.querySelector('#test').addEventListener("click", function(event){that.delteElement(event);	});
+        document.querySelector('#addObj').addEventListener("click", this.processNewElement.bind(this));   //add this
+        document.querySelector('#test').addEventListener("click", function(event){that.delteElement(event);	});  //add this
     },
 
     createCustomElement : function (config) {
@@ -28,7 +27,7 @@ var builder = {
     },
 
     updateCounts : function(event) {
-        event.id == 'addObj' ? (this.currentCount == this.maxCount ?
+        event.target.id == 'addObj' ? (this.currentCount == this.maxCount ?
             this.currentCount = 0 : this.currentCount++, this.count++) :
                     (this.currentCount--, this.count--);
         document.querySelector('#count').innerHTML = this.count;
@@ -43,57 +42,56 @@ var builder = {
         tmpDate.getMinutes();
     },
 
-    processNewElement : function(){
-        console.log(this);
+    processNewElement : function(event){
         var mainDiv = document.querySelector("#test");
 
-        var secondDiv = builder.createCustomElement ({
+        var secondDiv = this.createCustomElement ({
             type 			: 'div',
             class			: 'col-sm-3 col-xs-6',
             parentElement 	: mainDiv
         });
 
-        var imgURL = builder.createCustomElement ({
+        var imgURL = this.createCustomElement ({
             type 			: 'img',
             class			: 'img-thumbnail',
             parentElement 	: secondDiv,
-            src				: data[builder.currentCount].url
+            src				: data[this.currentCount].url
         });
 
-        var thirdDiv = builder.createCustomElement ({
+        var thirdDiv = this.createCustomElement ({
             type 			: 'div',
             class			: 'info-wrapper',
             parentElement 	: secondDiv
         });
 
-        var lastDiv1 = builder.createCustomElement ({
+        var lastDiv1 = this.createCustomElement ({
             type 			: 'div',
             class			: 'text-muted',
-            innerHTML       : data[builder.currentCount].id + ' ' + data[builder.currentCount].name,
+            innerHTML       : data[this.currentCount].id + ' ' + data[this.currentCount].name,
             parentElement 	: thirdDiv
         });
 
-        var lastDiv2 = builder.createCustomElement ({
+        var lastDiv2 = this.createCustomElement ({
             type 			: 'div',
             class			: 'text-muted',
-            innerHTML       : data[builder.currentCount].description,
+            innerHTML       : data[this.currentCount].description,
             parentElement 	: thirdDiv
         });
 
-        var lastDiv3 = builder.createCustomElement ({
+        var lastDiv3 = this.createCustomElement ({
             type 			: 'div',
             class			: 'text-muted',
-            innerHTML       : builder.newDate(data[builder.currentCount].date),
+            innerHTML       : this.newDate(data[this.currentCount].date),
             parentElement 	: thirdDiv
         });
 
-        var delDiv = builder.createCustomElement ({
+        var delDiv = this.createCustomElement ({
             type 			: 'div',
             class			: 'text-muted',
             parentElement 	: thirdDiv
         });
 
-        var delLink = builder.createCustomElement ({
+        var delLink = this.createCustomElement ({
             type 			: 'a',
             href			: '#',
             class			: 'remove',
@@ -101,13 +99,13 @@ var builder = {
             parentElement 	: delDiv
         });
 
-        builder.updateCounts(event);
+        this.updateCounts(event);
 },
 
     delteElement : function(event){
         if(event.target.className == 'remove'){
             document.querySelector('#test').removeChild(event.target.closest('.col-sm-3'));
-            builder.updateCounts(event)
+            this.updateCounts(event)
 
         }
     }
