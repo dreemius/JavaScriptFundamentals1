@@ -59,7 +59,7 @@ var data = [{
 	description : "uded through alternative means, such as additional",
 	date : 1322159200637
 }]
-console.log(document.querySelector('#addObj'));
+
 var Slider = {	
 	dataLength	 : 0,
 	currentCount : 0,
