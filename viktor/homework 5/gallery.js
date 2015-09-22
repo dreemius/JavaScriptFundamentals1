@@ -1,4 +1,4 @@
-// Это реальный объект на основе которого вам надо дудет строить галлерею
+// Это реальный объект на основе которого вам надо будет строить галлерею
 var data = [{
 	url: "http://desktopwallpapers.org.ua/mini/201507/40069.jpg",
 	name: "МАШИНКА",
@@ -72,19 +72,7 @@ var filterEvenOdd = function(arg){
 			(sortObj==1 && arg%2!==0) || 
 			(sortObj==2 && arg%2==0)) 
 			|| false;
-/* 
-		if (sortObj!==1 && sortObj!==2 ){
-           return true;
-       } else
-       if(sortObj==1 && arg%2!==0){
-           return true;
-       } else
-       if(sortObj==2 && arg%2==0){
-           return true;
-       } else {
-           return false
-       }
-	   */
+
 };
 var filterCount = function (id) {
 	return id <=maxObj;
@@ -145,5 +133,4 @@ var init = function() {
 
 init();
 
-// Везде где for переделать на forEach
 

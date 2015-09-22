@@ -1,4 +1,3 @@
-/*Task one*/
 (function (){
     var internalData = [],
         maxCount = 0,
@@ -107,56 +106,9 @@
         maxCount = (internalData.length-1);
 		attachListeners();
 	};
-
-    // init = function(){
-        // window.galleryBuilder = {
-            // add    : processNewElement,
-            // delete : delteElement
-        // };
-        // document.querySelector('#addObj').addEventListener("click", galleryBuilder.add);
-        // document.querySelector('#test').addEventListener("click", galleryBuilder.delete);
-    // };
 	
 	window.init = init;
-		
-
 }());
 
 init(data);
 
-	//document.querySelector('#test').removeChild(event.target.closest('.col-sm-3'));
-    //updateCounts();
-//};
-	
-	// сделать все через вызов функции createCustomElement +
-	// вынести удаление в функцию и передать туда первый аргумент event +
-	// поменять jquery подход на нативный +
-	// getElementById -> querySelector +
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-	
-/*Task two*/
-
-$("#exampleInputName2").keyup(function(){
-	$("#targetInput").val($("#exampleInputName2").val());
-});
-
-$("#clean").click(function(){
-	$("#exampleInputName2").val("");
-	$("#targetInput").val("");
-});

@@ -1,5 +1,3 @@
-/*Task one*/
-
 var builder = {
     maxCount        : 0,
     currentCount    : 0,
@@ -11,9 +9,9 @@ var builder = {
     init : function(data) {
         this.data = data;
         this.maxCount = (data.length-1);
-        var that = this;  // ????
-        document.querySelector('#addObj').addEventListener("click", this.processNewElement.bind(this));   //add this
-        document.querySelector('#test').addEventListener("click", function(event){that.delteElement(event);	});  //add this
+        var that = this; 
+        document.querySelector('#addObj').addEventListener("click", this.processNewElement.bind(this));   
+        document.querySelector('#test').addEventListener("click", function(event){that.delteElement(event);	});  
     },
 
     createCustomElement : function (config) {
@@ -114,41 +112,3 @@ var builder = {
 
 builder.init(data);
 
-
-
-	//document.querySelector('#test').removeChild(event.target.closest('.col-sm-3'));
-    //updateCounts();
-//};
-	
-	// сделать все через вызов функции createCustomElement +
-	// вынести удаление в функцию и передать туда первый аргумент event +
-	// поменять jquery подход на нативный +
-	// getElementById -> querySelector +
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-	
-/*Task two*/
-
-$("#exampleInputName2").keyup(function(){
-	$("#targetInput").val($("#exampleInputName2").val());
-});
-
-$("#clean").click(function(){
-	$("#exampleInputName2").val("");
-	$("#targetInput").val("");
-});

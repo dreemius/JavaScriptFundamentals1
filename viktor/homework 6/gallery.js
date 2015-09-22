@@ -1,4 +1,3 @@
-// Это реальный объект на основе которого вам надо дудет строить галлерею
 var data = [{
 	url: "http://desktopwallpapers.org.ua/mini/201507/40069.jpg",
 	name: "МАШИНКА",
@@ -38,13 +37,3 @@ var lastDiv3 = document.createElement('div');
 	lastDiv3.innerHTML = data[0].date;
 	thirdDiv.appendChild(lastDiv3);
 
-//<div id="test" class="row">
-//			<div class="col-sm-3 col-xs-6">
-//				<img src="http://desktopwallpapers.org.ua/mini/201507/40066.jpg" alt="testImage" class="img-thumbnail">
-//				<div class="info-wrapper">
-//					<div class="text-muted">03: Имя</div>
-//					<div class="text-muted">Описане</div>
-//					<div class="text-muted">Дата в формате (2014/05/25)</div>
-//				</div>
-//			</div>
-//		</div> 
